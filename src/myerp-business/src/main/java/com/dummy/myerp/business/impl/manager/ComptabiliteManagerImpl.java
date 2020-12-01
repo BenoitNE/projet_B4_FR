@@ -7,15 +7,12 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import com.dummy.myerp.business.service.DateTool;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
@@ -77,13 +74,20 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
          */
 
         String reference = pEcritureComptable.getReference();
+        Integer annee = 2016;
+        String journalCode = "BQ";        
         DateTool dateTool = new DateTool();
         String year = dateTool.getYearNow();
-        if (reference == null){
-            reference = pEcritureComptable.getJournal().getCode() + "-" + year + "/" + "00001" ;
+        try {
+            SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
+                    .getLastValueSequenceEcritureComptableForYear(journalCode,annee);
+
+            System.out.println(sequenceEcritureComptable.getDerniereValeur());
+
+
+        } catch (NotFoundException e) {
+            e.printStackTrace();
         }
-
-
 
 
     }
@@ -221,5 +225,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         } finally {
             getTransactionManager().rollbackMyERP(vTS);
         }
+    }
+
+    // pour tester
+
+    public static void main(String[] args) {
+        ComptabiliteManager comptabiliteManager = new ComptabiliteManagerImpl();
+        EcritureComptable ecritureComptable = new EcritureComptable();
+        comptabiliteManager.addReference(ecritureComptable);
     }
 }
