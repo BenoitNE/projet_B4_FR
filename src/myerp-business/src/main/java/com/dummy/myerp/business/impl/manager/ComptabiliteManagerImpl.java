@@ -63,7 +63,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                    (table sequence_ecriture_comptable)
+                        (table sequence_ecriture_comptable)
                 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                         1. Utiliser le numéro 1.
                     * Sinon :
@@ -74,19 +74,52 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
          */
 
         String reference = pEcritureComptable.getReference();
-        Integer annee = 2016;
-        String journalCode = "BQ";        
         DateTool dateTool = new DateTool();
-        String year = dateTool.getYearNow();
+        Integer year = dateTool.getYearNow();
+
+//        Integer annee = 2016;
+//        String journalCode = "BQ";
+//        try {
+//            SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
+//                    .getLastValueSequenceEcritureComptableForYear(journalCode,annee);
+//
+//            System.out.println(sequenceEcritureComptable.getDerniereValeur());
+//
+//
+//        } catch (NotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+
+        /*  1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
+                        (table sequence_ecriture_comptable)*/
+
+        if (reference!= null){
+
         try {
-            SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
-                    .getLastValueSequenceEcritureComptableForYear(journalCode,annee);
 
-            System.out.println(sequenceEcritureComptable.getDerniereValeur());
+                SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao().getLastValueSequenceEcritureComptableForYear(
+                        pEcritureComptable.getJournal().getCode(), year);
+
+                 /*  2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+                    1. Utiliser le numéro 1.
+                            * Sinon :
+                    1. Utiliser la dernière valeur + 1*/
 
 
-        } catch (NotFoundException e) {
+                if (sequenceEcritureComptable != null){
+
+
+
+                }
+
+            } catch (NotFoundException e) {
             e.printStackTrace();
+
+        }
+
+
+
         }
 
 
@@ -228,10 +261,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     }
 
     // pour tester
-
-    public static void main(String[] args) {
-        ComptabiliteManager comptabiliteManager = new ComptabiliteManagerImpl();
-        EcritureComptable ecritureComptable = new EcritureComptable();
-        comptabiliteManager.addReference(ecritureComptable);
-    }
+//
+//    public static void main(String[] args) {
+//        ComptabiliteManager comptabiliteManager = new ComptabiliteManagerImpl();
+//        EcritureComptable ecritureComptable = new EcritureComptable();
+//        comptabiliteManager.addReference(ecritureComptable);
+//    }
 }

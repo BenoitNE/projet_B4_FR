@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class DateTool {
 
-    public String getYearNow (){
+    public Integer getYearNow (){
         LocalDate now = LocalDate.now();
-        String year = String.valueOf(now.getYear());
+        Integer year = Integer.valueOf(now.getYear());
         return year;
 
     }
