@@ -77,24 +77,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         DateTool dateTool = new DateTool();
         Integer year = dateTool.getYearNow();
 
-//        Integer annee = 2016;
-//        String journalCode = "BQ";
-//        try {
-//            SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
-//                    .getLastValueSequenceEcritureComptableForYear(journalCode,annee);
-//
-//            System.out.println(sequenceEcritureComptable.getDerniereValeur());
-//
-//
-//        } catch (NotFoundException e) {
-//            e.printStackTrace();
-//        }
-
-
-        /*  1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                        (table sequence_ecriture_comptable)*/
-
-        if (reference!= null){
 
         try {
 
@@ -117,11 +99,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             e.printStackTrace();
 
         }
-
-
-
-        }
-
 
     }
 
@@ -260,11 +237,5 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
     }
 
-    // pour tester
-//
-//    public static void main(String[] args) {
-//        ComptabiliteManager comptabiliteManager = new ComptabiliteManagerImpl();
-//        EcritureComptable ecritureComptable = new EcritureComptable();
-//        comptabiliteManager.addReference(ecritureComptable);
-//    }
+
 }

@@ -28,7 +28,7 @@ public class Formatting {
 
     public static void main(String[] args) {
 
-        String code = "46";
+        String code = "800";
         Formatting formatting= new Formatting();
 
         System.out.println("le code est "+formatting.getSequenceNumber(code));

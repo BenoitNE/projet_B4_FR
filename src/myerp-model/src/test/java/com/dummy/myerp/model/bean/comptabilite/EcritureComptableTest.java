@@ -6,6 +6,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.mockito.Mockito.verify;
+
 
 public class EcritureComptableTest {
 
@@ -20,6 +22,13 @@ public class EcritureComptableTest {
         return vRetour;
     }
 
+    /*
+    * Pour que le solde soit équilibé:
+    *
+    * Ν{an} - Ν{bn} = 0
+    * a = débit; b = crédit;
+    *
+    * */
     @Test
     public void isEquilibree() {
         EcritureComptable vEcriture;
@@ -30,7 +39,9 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
-        Assert.assertTrue(vEcriture.toString(), vEcriture.isEquilibree());
+
+        Assert.assertEquals(0, vEcriture.isEquilibree());
+
 
         vEcriture.getListLigneEcriture().clear();
         vEcriture.setLibelle("Non équilibrée");
@@ -38,7 +49,37 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "20", "1"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "30"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "2"));
-        Assert.assertFalse(vEcriture.toString(), vEcriture.isEquilibree());
+        Assert.assertEquals(-1, vEcriture.isEquilibree());
+    }
+
+    
+
+    @Test
+    public void getTotalDebit(){
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
+        BigDecimal bigDecimal = new BigDecimal(34100).movePointLeft(2);
+
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+
+        Assert.assertEquals(bigDecimal, vEcriture.getTotalDebit());
+    }
+
+    @Test
+    public void getTotalCredit(){
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
+        BigDecimal bigDecimal = new BigDecimal(341);
+
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+
+        Assert.assertEquals(bigDecimal, vEcriture.getTotalCredit());
     }
 
 }
