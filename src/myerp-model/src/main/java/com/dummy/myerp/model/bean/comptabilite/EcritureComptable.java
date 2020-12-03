@@ -2,6 +2,7 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -110,9 +111,11 @@ public class EcritureComptable {
      * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
      * @return boolean
      */
-    public int isEquilibree() {
-        return this.getTotalDebit().compareTo(getTotalCredit());
-        
+    public boolean isEquilibree() {
+        DecimalFormat decimalFormat = new DecimalFormat("#####.00");
+            boolean vRetour = decimalFormat.format(getTotalDebit())
+                    .equals(decimalFormat.format(getTotalCredit()));
+        return vRetour;
     }
 
     // ==================== Méthodes ====================
