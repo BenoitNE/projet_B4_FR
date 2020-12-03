@@ -92,4 +92,30 @@ public interface ComptabiliteDao {
      * @throws NotFoundException : Si la sequence d'écriture n'est pas trouvée
      */
     SequenceEcritureComptable getLastValueSequenceEcritureComptableForYear(String pJournalCode, Integer pAnnee) throws NotFoundException;
+
+    /**
+     * Insère une séquence d'écriture comptable {@journalCode pJournalCode} {@annee pAnnee} {@derniereValeur pDerniereValeur}.
+     *
+     * @param pJournalCode le code journal
+     * @param pAnnee l'annee en cours
+     * @param pDerniereValeur
+     *
+     * @return {@link SequenceEcritureComptable}
+     * @throws NotFoundException : Si la sequence d'écriture n'est pas trouvée
+     */
+    void insertSequenceEcritureComptable(int pAnnee, int pDerniereValeur, String pJournalCode);
+
+    /**
+     * Insère met à jour une séquence d'écriture comptable {@journalCode pJournalCode} {@annee pAnnee} {@derniereValeur pDerniereValeur}.
+     *
+     * @param pJournalCode le code journal
+     * @param pAnnee l'annee en cours
+     * @param pDerniereValeur
+     *
+     * @return {@link SequenceEcritureComptable}
+     * @throws NotFoundException : Si la sequence d'écriture n'est pas trouvée
+     */
+    void updateSequenceEcritureComptable(int pAnnee, int pDerniereValeur, String pJournalCode);
+
+
 }

@@ -96,6 +96,21 @@
                 AND journal_code = :journal_code
             </value>
         </property>
+        <property name="SQLupdateSequenceEcritureComptable">
+        <value>
+            UPDATE myerp.sequence_ecriture_comptable
+            SET derniere_valeur = :derniere_valeur
+            WHERE annee = :annee
+            AND journal_code = :journal_code
+        </value>
+        </property>
+        <property name="SQLinsertSequenceEcritureComptable">
+        <value>
+            INSERT INTO myerp.sequence_ecriture_comptable
+            VALUES (:code, :annee, :derniere_valeur)
+        </value>
+        </property>
+
     </bean>
 
 </beans>

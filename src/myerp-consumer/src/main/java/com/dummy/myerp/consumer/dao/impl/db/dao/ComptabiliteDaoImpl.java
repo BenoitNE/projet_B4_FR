@@ -262,7 +262,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
     }
 
-    // ==================== SequenceEcritureComptable - GET ====================
+    // ==================== SequenceEcritureComptable ===========================
 
 
     /** SQLgetLastValueSequenceEcritureComptableByYear */
@@ -287,5 +287,38 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         }
         return vBean;
     }
+
+    /** SQLinsertSequenceEcritureComptable */
+    private static String SQLinsertSequenceEcritureComptable;
+    public void setSQLinsertSequenceEcritureComptable(String pSQLinsertSequenceEcritureComptable){
+        SQLinsertSequenceEcritureComptable = pSQLinsertSequenceEcritureComptable;
+    }
+
+    @Override
+    public void insertSequenceEcritureComptable(int pAnnee, int pDerniereValeur, String pJournalCode) {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("annee", pAnnee);
+        vSqlParams.addValue("derniere_valeur", pDerniereValeur);
+        vSqlParams.addValue("code", pJournalCode);
+        vJdbcTemplate.update(SQLinsertSequenceEcritureComptable, vSqlParams);
+    }
+
+    /** SQLupdateSequenceEcritureComptable*/
+    private static String SQLupdateSequenceEcritureComptable;
+    public void setSQLupdateSequenceEcritureComptable(String pSQLupdateSequenceEcritureComptable){
+        SQLupdateSequenceEcritureComptable = pSQLupdateSequenceEcritureComptable;
+    }
+
+    @Override
+    public void updateSequenceEcritureComptable(int pAnnee, int pDerniereValeur, String pJournalCode) {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("annee", pAnnee);
+        vSqlParams.addValue("derniere_valeur", pDerniereValeur);
+        vSqlParams.addValue("code", pJournalCode);
+        vJdbcTemplate.update(SQLupdateSequenceEcritureComptable, vSqlParams);
+    }
+
 
 }
