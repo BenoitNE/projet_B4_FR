@@ -69,4 +69,6 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
+    public void
+
 }
