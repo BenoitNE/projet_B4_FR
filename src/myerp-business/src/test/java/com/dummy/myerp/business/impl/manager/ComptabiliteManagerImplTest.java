@@ -3,20 +3,22 @@ package com.dummy.myerp.business.impl.manager;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.dummy.myerp.business.impl.AbstractBusinessManager;
+import com.dummy.myerp.business.impl.TransactionManager;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import com.dummy.myerp.technical.exception.FunctionalException;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+
 public class ComptabiliteManagerImplTest {
 
 
@@ -25,7 +27,19 @@ public class ComptabiliteManagerImplTest {
     @Mock
     private ComptabiliteDao comptabiliteDaoMock;
 
+    @Mock
+    private DaoProxy daoProxyMock;
 
+    @Mock
+    private TransactionManager transactionManagerMock;
+
+ /*    Initialisation et configuration de Mockito pour la mise en place des tests*/
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        when(this.daoProxyMock.getComptabiliteDao()).thenReturn(this.comptabiliteDaoMock);
+        AbstractBusinessManager.configure(null, this.daoProxyMock, this.transactionManagerMock);
+    }
 
     @Test
     public void checkEcritureComptableUnit() throws Exception {
@@ -100,12 +114,15 @@ public class ComptabiliteManagerImplTest {
         vSequenceEcritureComptable.setDerniereValeur(89);
 
        /* Utilisation du Mock*/
-        when (this.comptabiliteDaoMock.getLastValueSequenceEcritureComptableForYear("AC", 2019))
-                .thenReturn(vSequenceEcritureComptable);
+        try {
+            when (this.comptabiliteDaoMock.getLastValueSequenceEcritureComptableForYear("AC", 2019))
+                    .thenReturn(vSequenceEcritureComptable);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
 
         manager.addReference(vEcritureComptable);
 
-//        verify("AC-2020/00001",vEcritureComptable.getReference());
         Assert.assertEquals("AC-2020/00001",vEcritureComptable.getReference());
 
 

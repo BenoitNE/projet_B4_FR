@@ -4,6 +4,8 @@ import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.model.bean.comptabilite.*;
 
+import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
@@ -87,7 +89,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 // 4.  Enregistrer (insert) la valeur de la séquence en persitance
                 if (sequenceEcritureComptable == null){
                 referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + this.getYearNow() + "/00001";
-                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(this.getYearNow(),1,sequenceEcritureComptable.getJournalCode());
+                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(this.getYearNow(),1,pEcritureComptable.getJournal().getCode());
                 }
 
                 //    2.2. Utiliser la dernière valeur + 1
@@ -96,7 +98,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + this.getYearNow() + "/" +
                         this.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
                 getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable.getAnnee(),
-                        sequenceEcritureComptable.getDerniereValeur()+1, sequenceEcritureComptable.getJournalCode());
+                        sequenceEcritureComptable.getDerniereValeur()+1, pEcritureComptable.getJournal().getCode());
                 }
 
                 // 3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
@@ -104,7 +106,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
 
         } catch (NotFoundException e) {
-            e.printStackTrace("Aucune séquense n'a été trouvé");
+            e.printStackTrace();
         }
     }
 

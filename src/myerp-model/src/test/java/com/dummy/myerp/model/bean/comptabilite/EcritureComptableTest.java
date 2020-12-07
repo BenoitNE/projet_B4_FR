@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-/*@ExtendWith(MockitoExtension.class)*/
+
 public class EcritureComptableTest {
 
     private LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {

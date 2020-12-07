@@ -14,17 +14,7 @@
     <remote-repository>
       <option name="id" value="project.local" />
       <option name="name" value="project.local" />
-      <option name="url" value="file://$PROJECT_DIR$/src/myerp-technical/../src/lib/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="project.local" />
-      <option name="name" value="project.local" />
       <option name="url" value="file://$PROJECT_DIR$/src/../src/lib/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="project.local" />
-      <option name="name" value="project.local" />
-      <option name="url" value="file://$PROJECT_DIR$/src/myerp-business/../src/lib/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -32,14 +22,24 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="project.local" />
+      <option name="name" value="project.local" />
+      <option name="url" value="file://$PROJECT_DIR$/src/myerp-technical/../src/lib/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="project.local" />
       <option name="name" value="project.local" />
       <option name="url" value="file://$PROJECT_DIR$/src/myerp-model/../src/lib/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="jboss.community" />
-      <option name="name" value="JBoss Community repository" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+      <option name="id" value="project.local" />
+      <option name="name" value="project.local" />
+      <option name="url" value="file://$PROJECT_DIR$/src/myerp-business/../src/lib/" />
     </remote-repository>
   </component>
 </project>
