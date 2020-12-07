@@ -94,8 +94,10 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
+    /*-------------------------- addReference Test --------------------------------*/
+
     @Test
-    public void addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist (){
+    public void addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist () throws NotFoundException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -113,7 +115,6 @@ public class ComptabiliteManagerImplTest {
         vSequenceEcritureComptable.setAnnee(2019);
         vSequenceEcritureComptable.setDerniereValeur(89);
 
-       /* Utilisation du Mock*/
         try {
             when (this.comptabiliteDaoMock.getLastValueSequenceEcritureComptableForYear("AC", 2019))
                     .thenReturn(vSequenceEcritureComptable);
@@ -125,7 +126,39 @@ public class ComptabiliteManagerImplTest {
 
         Assert.assertEquals("AC-2020/00001",vEcritureComptable.getReference());
 
+    }
+
+    @Test
+    public void addReferenceWhenSequenceEcritureComptableForYearNowExist () throws NotFoundException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123),
+                null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                null, null,
+                new BigDecimal(1234)));
+
+        SequenceEcritureComptable vSequenceEcritureComptable = new SequenceEcritureComptable();
+        vSequenceEcritureComptable.setJournalCode("AC");
+        vSequenceEcritureComptable.setAnnee(2020);
+        vSequenceEcritureComptable.setDerniereValeur(89);
+
+        try {
+            when (this.comptabiliteDaoMock.getLastValueSequenceEcritureComptableForYear("AC", 2020))
+                    .thenReturn(vSequenceEcritureComptable);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+
+        manager.addReference(vEcritureComptable);
+
+        Assert.assertEquals("AC-2020/00090",vEcritureComptable.getReference());
 
     }
+
 
 }

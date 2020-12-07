@@ -61,7 +61,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     // TODO à tester
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
         // TODO à implémenter
 
         String referenceEcritureComptable = null;
@@ -95,8 +95,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             pEcritureComptable.setReference(referenceEcritureComptable);
             getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
 
-        } catch (NotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new NotFoundException("La référence n'a pas pu être générée");
         }
     }
 
