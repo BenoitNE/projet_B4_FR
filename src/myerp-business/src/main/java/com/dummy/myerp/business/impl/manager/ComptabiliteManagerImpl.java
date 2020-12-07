@@ -2,6 +2,7 @@ package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
+import com.dummy.myerp.business.service.EcritureComptableReferenceService;
 import com.dummy.myerp.model.bean.comptabilite.*;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
@@ -62,41 +63,30 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
         // TODO à implémenter
-        // Bien se réferer à la JavaDoc de cette méthode !
-        /* Le principe :
-                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-                        (table sequence_ecriture_comptable)
-                2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                        2.1. Utiliser le numéro 1.
-                    * Sinon :
-                        2.2. Utiliser la dernière valeur + 1
-                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-                4.  Enregistrer (insert/update) la valeur de la séquence en persitance
-                    (table sequence_ecriture_comptable)
-         */
 
         String referenceEcritureComptable = null;
+        EcritureComptableReferenceService referenceService = new EcritureComptableReferenceService();
 
         // 1. Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
         //                        (table sequence_ecriture_comptable)
         try {
                 SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
                         .getLastValueSequenceEcritureComptableForYear(
-                        pEcritureComptable.getJournal().getCode(), this.getYearNow());
+                        pEcritureComptable.getJournal().getCode(), referenceService.getYearNow());
 
                 // 2. S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                 //    2.1. Utiliser le numéro 1
                 // 4.  Enregistrer (insert) la valeur de la séquence en persitance
                 if (sequenceEcritureComptable == null){
-                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + this.getYearNow() + "/00001";
-                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(this.getYearNow(),1,pEcritureComptable.getJournal().getCode());
+                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + referenceService.getYearNow() + "/00001";
+                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(referenceService.getYearNow(),1,pEcritureComptable.getJournal().getCode());
                 }
 
                 //    2.2. Utiliser la dernière valeur + 1
                 // 4.  Enregistrer (update) la valeur de la séquence en persitance
                 else{
-                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + this.getYearNow() + "/" +
-                        this.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
+                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + referenceService.getYearNow() + "/" +
+                        referenceService.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
                 getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable.getAnnee(),
                         sequenceEcritureComptable.getDerniereValeur()+1, pEcritureComptable.getJournal().getCode());
                 }
@@ -110,32 +100,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
     }
 
-    private Integer getYearNow (){
-        LocalDate now = LocalDate.now();
-        Integer year = Integer.valueOf(now.getYear());
-
-        return year;
-    }
-
-    private String getNewSequenceNumber (Integer lastValueSequenceEcritureComptable){
-        String [] sequenceNumber = {"0","0","0","0","0"};
-        lastValueSequenceEcritureComptable = lastValueSequenceEcritureComptable + 1;
-        String lastValueSequence = String.valueOf(lastValueSequenceEcritureComptable);
-        for (int i=0; i < lastValueSequence.length(); i++){
-            if (i == 0) {
-                sequenceNumber[sequenceNumber.length-1] = String.valueOf(lastValueSequence
-                        .charAt(lastValueSequence.length()-1));
-            }
-            else {
-                sequenceNumber[sequenceNumber.length-1-i] = String.valueOf(lastValueSequence
-                        .charAt(lastValueSequence.length()-1-i));
-            }
-        }
-        return (Arrays.toString(sequenceNumber)).replace("[","")
-                .replace("]","")
-                .replace(",","")
-                .replace(" ","");
-    }
 
     /**
      * {@inheritDoc}
