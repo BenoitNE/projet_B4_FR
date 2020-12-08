@@ -1,14 +1,14 @@
 package com.dummy.myerp.business.impl.manager;
 
-import com.dummy.myerp.business.service.EcritureComptableReferenceService;
+import com.dummy.myerp.business.service.EcritureComptableService;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
 
-public class EcritureComptableReferenceServiceTest {
+public class EcritureComptableServiceTest {
 
-    private EcritureComptableReferenceService referenceService = new EcritureComptableReferenceService();
+    private EcritureComptableService referenceService = new EcritureComptableService();
 
 
     @Test
@@ -21,6 +21,16 @@ public class EcritureComptableReferenceServiceTest {
     public void getNewSequenceNumberException() throws NotFoundException{
         Integer lastValueSequenceEcritureComptable = 5345698;
         referenceService.getNewSequenceNumber(lastValueSequenceEcritureComptable);
+    }
+
+    @Test
+    public void getJournalCodeByReference(){
+        Assert.assertEquals("AC", referenceService.getJournalCodeByReference("AC-2020/00031"));
+    }
+
+    @Test
+    public void  getDateByReference(){
+        Assert.assertEquals("2020", referenceService.getDateByReference("AC-2020/00031"));
     }
 
 }

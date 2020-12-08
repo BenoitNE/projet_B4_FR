@@ -6,7 +6,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class EcritureComptableReferenceService {
+public class EcritureComptableService {
     public Integer getYearNow (){
         LocalDate now = LocalDate.now();
         Integer year = Integer.valueOf(now.getYear());
@@ -35,5 +35,16 @@ public class EcritureComptableReferenceService {
         }catch (Exception e) {
             throw new NotFoundException("La séquence n'a pas pu être générée");
         }
+    }
+    public String getJournalCodeByReference (String referenceEcritureComptable) {
+        return String.valueOf(referenceEcritureComptable.charAt(0))
+                + String.valueOf(referenceEcritureComptable.charAt(1));
+    }
+
+    public String getDateByReference (String referenceEcritureComptable){
+        return String.valueOf(referenceEcritureComptable.charAt(3))
+                + String.valueOf(referenceEcritureComptable.charAt(4))
+                + String.valueOf(referenceEcritureComptable.charAt(5))
+                + String.valueOf(referenceEcritureComptable.charAt(6));
     }
 }

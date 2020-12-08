@@ -2,7 +2,7 @@ package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.business.service.EcritureComptableReferenceService;
+import com.dummy.myerp.business.service.EcritureComptableService;
 import com.dummy.myerp.model.bean.comptabilite.*;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
@@ -14,8 +14,6 @@ import org.springframework.transaction.TransactionStatus;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +33,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public ComptabiliteManagerImpl() {
     }
 
+   /**
+    * Instanciation de la classe Service
+    */
+    EcritureComptableService ecritureComptableService = new EcritureComptableService();
 
     // ==================== Getters/Setters ====================
     @Override
@@ -63,28 +65,27 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
 
         String referenceEcritureComptable = null;
-        EcritureComptableReferenceService referenceService = new EcritureComptableReferenceService();
 
         // 1. Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
         //                        (table sequence_ecriture_comptable)
         try {
                 SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
                         .getLastValueSequenceEcritureComptableForYear(
-                        pEcritureComptable.getJournal().getCode(), referenceService.getYearNow());
+                        pEcritureComptable.getJournal().getCode(), ecritureComptableService.getYearNow());
 
                 // 2. S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                 //    2.1. Utiliser le numéro 1
                 // 4.  Enregistrer (insert) la valeur de la séquence en persitance
                 if (sequenceEcritureComptable == null){
-                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + referenceService.getYearNow() + "/00001";
-                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(referenceService.getYearNow(),1,pEcritureComptable.getJournal().getCode());
+                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/00001";
+                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(ecritureComptableService.getYearNow(),1,pEcritureComptable.getJournal().getCode());
                 }
 
                 //    2.2. Utiliser la dernière valeur + 1
                 // 4.  Enregistrer (update) la valeur de la séquence en persitance
                 else{
-                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + referenceService.getYearNow() + "/" +
-                        referenceService.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
+                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/" +
+                        ecritureComptableService.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
                 getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable.getAnnee(),
                         sequenceEcritureComptable.getDerniereValeur()+1, pEcritureComptable.getJournal().getCode());
                 }
@@ -119,6 +120,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     // TODO tests à compléter
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
+
+
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
@@ -157,6 +160,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        if(!pEcritureComptable.getJournal().getCode()
+                .equals(ecritureComptableService.getJournalCodeByReference(pEcritureComptable.getReference()))){
+            throw new FunctionalException("Le code journal ne correspond pas à celui de la reférence.");
+        }
+
+        if(!pEcritureComptable.getDate().equals(ecritureComptableService.getDateByReference(pEcritureComptable.getReference()))){
+            throw new FunctionalException("L'année dans la référence ne correspond pas à celle de l'écriture.");
+        }
     }
 
 
