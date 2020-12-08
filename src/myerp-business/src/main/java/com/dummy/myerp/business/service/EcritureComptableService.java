@@ -49,7 +49,7 @@ public class EcritureComptableService {
                 + String.valueOf(referenceEcritureComptable.charAt(4))
                 + String.valueOf(referenceEcritureComptable.charAt(5))
                 + String.valueOf(referenceEcritureComptable.charAt(6));
-        Date date = new SimpleDateFormat("dd-MMM-yyyy").parse(sDate);
+        Date date = new SimpleDateFormat("yyyy").parse(sDate);
         return date ;
     }
 }
