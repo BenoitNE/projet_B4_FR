@@ -3,8 +3,11 @@ package com.dummy.myerp.business.service;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 
 public class EcritureComptableService {
     public Integer getYearNow (){
@@ -41,10 +44,12 @@ public class EcritureComptableService {
                 + String.valueOf(referenceEcritureComptable.charAt(1));
     }
 
-    public String getDateByReference (String referenceEcritureComptable){
-        return String.valueOf(referenceEcritureComptable.charAt(3))
+    public Date getDateByReference (String referenceEcritureComptable) throws ParseException {
+        String sDate = String.valueOf(referenceEcritureComptable.charAt(3))
                 + String.valueOf(referenceEcritureComptable.charAt(4))
                 + String.valueOf(referenceEcritureComptable.charAt(5))
                 + String.valueOf(referenceEcritureComptable.charAt(6));
+        Date date = new SimpleDateFormat("dd-MMM-yyyy").parse(sDate);
+        return date ;
     }
 }

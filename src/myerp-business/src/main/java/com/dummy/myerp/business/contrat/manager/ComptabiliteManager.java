@@ -1,5 +1,6 @@
 package com.dummy.myerp.business.contrat.manager;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -59,7 +60,7 @@ public interface ComptabiliteManager {
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException;
+    void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException;
 
     /**
      * Insert une nouvelle écriture comptable.
@@ -67,7 +68,7 @@ public interface ComptabiliteManager {
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    void insertEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException;
+    void insertEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException;
 
     /**
      * Met à jour l'écriture comptable.

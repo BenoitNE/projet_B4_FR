@@ -5,6 +5,8 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.ParseException;
+
 
 public class EcritureComptableServiceTest {
 
@@ -29,7 +31,7 @@ public class EcritureComptableServiceTest {
     }
 
     @Test
-    public void  getDateByReference(){
+    public void  getDateByReference() throws ParseException {
         Assert.assertEquals("2020", referenceService.getDateByReference("AC-2020/00031"));
     }
 

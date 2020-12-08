@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
@@ -42,12 +43,13 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void checkEcritureComptableUnit() throws Exception {
+    public void checkEcritureComptableUnit() throws FunctionalException, ParseException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setDate(new Date(2020));
         vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("AC-2020/00124");
         vEcritureComptable.getListLigneEcriture()
                 .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
         vEcritureComptable.getListLigneEcriture()
