@@ -160,5 +160,35 @@ public class ComptabiliteManagerImplTest {
 
     }
 
+    @Test (expected = NotFoundException.class)
+    public void addReferenceException() throws NotFoundException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123),
+                null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                null, null,
+                new BigDecimal(1234)));
+
+        SequenceEcritureComptable vSequenceEcritureComptable = new SequenceEcritureComptable();
+        vSequenceEcritureComptable.setJournalCode("AC");
+        vSequenceEcritureComptable.setAnnee(2020);
+        vSequenceEcritureComptable.setDerniereValeur(895667546);
+
+        try {
+            when (this.comptabiliteDaoMock.getLastValueSequenceEcritureComptableForYear("AC", 2020))
+                    .thenReturn(vSequenceEcritureComptable);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        manager.addReference(vEcritureComptable);
+        System.out.println(vEcritureComptable.getReference());
+    }
+
+
 
 }

@@ -18,7 +18,7 @@ public class EcritureComptableReferenceServiceTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void getNewSequenceNumberError() throws NotFoundException{
+    public void getNewSequenceNumberException() throws NotFoundException{
         Integer lastValueSequenceEcritureComptable = 5345698;
         referenceService.getNewSequenceNumber(lastValueSequenceEcritureComptable);
     }
