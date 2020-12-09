@@ -11,12 +11,9 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -164,7 +161,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             throw new FunctionalException("Le code journal ne correspond pas à celui de la reférence.");
         }
 
-        if(!pEcritureComptable.getDate().equals(ecritureComptableService.getDateByReference(pEcritureComptable.getReference()))){
+        if(ecritureComptableService.getYearFromDate(pEcritureComptable.getDate())!=(ecritureComptableService.getDateByReference(pEcritureComptable.getReference()))){
             throw new FunctionalException("L'année dans la référence ne correspond pas à celle de l'écriture.");
         }
     }

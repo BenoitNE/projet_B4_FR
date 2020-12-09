@@ -6,6 +6,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -44,12 +45,17 @@ public class EcritureComptableService {
                 + String.valueOf(referenceEcritureComptable.charAt(1));
     }
 
-    public Date getDateByReference (String referenceEcritureComptable) throws ParseException {
+    public int getDateByReference(String referenceEcritureComptable) throws ParseException {
         String sDate = String.valueOf(referenceEcritureComptable.charAt(3))
                 + String.valueOf(referenceEcritureComptable.charAt(4))
                 + String.valueOf(referenceEcritureComptable.charAt(5))
                 + String.valueOf(referenceEcritureComptable.charAt(6));
-        Date date = new SimpleDateFormat("yyyy").parse(sDate);
-        return date ;
+        //Date date = new SimpleDateFormat("yyyy").parse(sDate);
+        return Integer.parseInt(sDate);
+    }
+
+    public int getYearFromDate(Date date){
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return localDate.getYear();
     }
 }

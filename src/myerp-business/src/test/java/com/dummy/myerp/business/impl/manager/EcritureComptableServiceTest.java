@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -33,9 +32,13 @@ public class EcritureComptableServiceTest {
     }
 
     @Test
-    public void  getDateByReference() throws ParseException {
-        Date date = new SimpleDateFormat("yyyy").parse("2020");
-        Assert.assertEquals(date , referenceService.getDateByReference("AC-2020/00031"));
+    public void  getIntDateByReference() throws ParseException {
+        Assert.assertEquals(2020 , referenceService.getDateByReference("AC-2020/00031"));
+    }
+
+    @Test
+    public void getYearFromDate(){
+        Assert.assertEquals(2020,referenceService.getYearFromDate(new Date()));
     }
 
 }

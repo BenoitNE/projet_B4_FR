@@ -2,7 +2,6 @@ package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
@@ -63,7 +62,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable2 = new EcritureComptable();
         vEcritureComptable2.setId(7);
         vEcritureComptable2.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable2.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable2.setDate(new Date());
         vEcritureComptable2.setLibelle("Libelle");
         vEcritureComptable2.setReference("AC-2020/00033");
         vEcritureComptable2.getListLigneEcriture()
@@ -83,7 +82,7 @@ public class ComptabiliteManagerImplTest {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.setReference("AC-2020/00124");
         vEcritureComptable.getListLigneEcriture()
@@ -174,7 +173,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable1 = new EcritureComptable();
         vEcritureComptable1.setId(7);
         vEcritureComptable1.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable1.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable1.setDate(new Date());
         vEcritureComptable1.setLibelle("Libelle");
         vEcritureComptable1.setReference("AC-2020/00122");
         vEcritureComptable1.getListLigneEcriture()
@@ -186,7 +185,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable2 = new EcritureComptable();
         vEcritureComptable2.setId(7);
         vEcritureComptable2.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable2.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable2.setDate(new Date());
         vEcritureComptable2.setLibelle("Libelle");
         vEcritureComptable2.setReference("AC-2020/00033");
         vEcritureComptable2.getListLigneEcriture()
