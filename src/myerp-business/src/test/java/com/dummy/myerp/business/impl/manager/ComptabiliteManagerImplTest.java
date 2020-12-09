@@ -43,6 +43,41 @@ public class ComptabiliteManagerImplTest {
         AbstractBusinessManager.configure(null, this.daoProxyMock, this.transactionManagerMock);
     }
 
+    /*-------------------------- checkEcritureComptable Test --------------------------------*/
+
+    @Test
+    public void checkEcritureComptable() throws ParseException, FunctionalException, NotFoundException {
+        EcritureComptable vEcritureComptable1;
+        vEcritureComptable1 = new EcritureComptable();
+        vEcritureComptable1.setId(7);
+        vEcritureComptable1.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable1.setDate(new Date());
+        vEcritureComptable1.setLibelle("Libelle");
+        vEcritureComptable1.setReference("AC-2020/00122");
+        vEcritureComptable1.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
+        vEcritureComptable1.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
+
+        EcritureComptable vEcritureComptable2;
+        vEcritureComptable2 = new EcritureComptable();
+        vEcritureComptable2.setId(7);
+        vEcritureComptable2.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable2.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable2.setLibelle("Libelle");
+        vEcritureComptable2.setReference("AC-2020/00033");
+        vEcritureComptable2.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
+        vEcritureComptable2.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
+
+            when (this.comptabiliteDaoMock.getEcritureComptableByRef(vEcritureComptable1.getReference()))
+                   .thenReturn(vEcritureComptable2);
+
+        manager.checkEcritureComptable(vEcritureComptable1);
+
+    }
+
     @Test
     public void checkEcritureComptableUnit() throws FunctionalException, ParseException {
         EcritureComptable vEcritureComptable;
@@ -97,6 +132,74 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
+    @Test(expected = FunctionalException.class)
+    public void checkEcritureComptableUnitRG5CodeJournal() throws FunctionalException, ParseException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("KG-2020/00023");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123),
+                null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                null, null,
+                new BigDecimal(123)));
+
+        manager.checkEcritureComptableUnit(vEcritureComptable);
+    }
+
+    @Test(expected = FunctionalException.class)
+    public void checkEcritureComptableUnitRG5Date() throws FunctionalException, ParseException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("AC-2003/00023");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123),
+                null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                null, null,
+                new BigDecimal(123)));
+
+        manager.checkEcritureComptableUnit(vEcritureComptable);
+    }
+
+    @Test
+    public void checkEcritureComptableContextRG6() throws NotFoundException, FunctionalException, ParseException {
+        EcritureComptable vEcritureComptable1;
+        vEcritureComptable1 = new EcritureComptable();
+        vEcritureComptable1.setId(7);
+        vEcritureComptable1.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable1.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable1.setLibelle("Libelle");
+        vEcritureComptable1.setReference("AC-2020/00122");
+        vEcritureComptable1.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
+        vEcritureComptable1.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
+
+        EcritureComptable vEcritureComptable2;
+        vEcritureComptable2 = new EcritureComptable();
+        vEcritureComptable2.setId(7);
+        vEcritureComptable2.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable2.setDate(new SimpleDateFormat("yyyy").parse("2020"));
+        vEcritureComptable2.setLibelle("Libelle");
+        vEcritureComptable2.setReference("AC-2020/00033");
+        vEcritureComptable2.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
+        vEcritureComptable2.getListLigneEcriture()
+                .add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
+
+        when(this.comptabiliteDaoMock.getEcritureComptableByRef(vEcritureComptable1.getReference()))
+                .thenReturn(vEcritureComptable2);
+
+        manager.checkEcritureComptableContext(vEcritureComptable1);
+
+    }
     /*-------------------------- addReference Test --------------------------------*/
 
     @Test
@@ -126,7 +229,6 @@ public class ComptabiliteManagerImplTest {
         }
 
         manager.addReference(vEcritureComptable);
-
         Assert.assertEquals("AC-2020/00001",vEcritureComptable.getReference());
 
     }
@@ -158,7 +260,6 @@ public class ComptabiliteManagerImplTest {
         }
 
         manager.addReference(vEcritureComptable);
-
         Assert.assertEquals("AC-2020/00090",vEcritureComptable.getReference());
 
     }
@@ -189,7 +290,6 @@ public class ComptabiliteManagerImplTest {
             e.printStackTrace();
         }
         manager.addReference(vEcritureComptable);
-        System.out.println(vEcritureComptable.getReference());
     }
 
 

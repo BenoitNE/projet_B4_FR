@@ -104,7 +104,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
     @Override
     public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
         this.checkEcritureComptableUnit(pEcritureComptable);
@@ -159,7 +158,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         if(!pEcritureComptable.getJournal().getCode()
                 .equals(ecritureComptableService.getJournalCodeByReference(pEcritureComptable.getReference()))){
