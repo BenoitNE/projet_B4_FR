@@ -66,9 +66,9 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable2.setLibelle("Libelle");
         vEcritureComptable2.setReference("AC-2020/00033");
         vEcritureComptable2.getListLigneEcriture()
-                .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
+                .add(new LigneEcritureComptable(new CompteComptable(3), null, new BigDecimal(123), null));
         vEcritureComptable2.getListLigneEcriture()
-                .add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
+                .add(new LigneEcritureComptable(new CompteComptable(4), null, null, new BigDecimal(123)));
 
             when (this.comptabiliteDaoMock.getEcritureComptableByRef(vEcritureComptable1.getReference()))
                    .thenReturn(vEcritureComptable2);

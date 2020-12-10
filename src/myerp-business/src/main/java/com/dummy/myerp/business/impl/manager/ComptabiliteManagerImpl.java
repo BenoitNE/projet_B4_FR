@@ -11,9 +11,12 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -119,7 +122,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
 
 
-      /*  // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
+     /*   // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
             throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion.",
