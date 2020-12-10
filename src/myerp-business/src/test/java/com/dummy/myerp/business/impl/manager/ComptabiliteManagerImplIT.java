@@ -4,6 +4,8 @@ import org.junit.Test;
 
 public class ComptabiliteManagerImplIT {
 
+
+
     @Test
     void test (){
 
