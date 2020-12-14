@@ -45,7 +45,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         return getDaoProxy().getComptabiliteDao().getListCompteComptable();
     }
 
-
     @Override
     public List<JournalComptable> getListJournalComptable() {
         return getDaoProxy().getComptabiliteDao().getListJournalComptable();
@@ -122,14 +121,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
 
 
-     /*   // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
+        // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
             throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion.",
                                           new ConstraintViolationException(
                                               "L'écriture comptable ne respecte pas les contraintes de validation",
                                               vViolations));
-        }*/
+        }
 
         // ===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit être équilibrée
         if (!pEcritureComptable.isEquilibree()) {

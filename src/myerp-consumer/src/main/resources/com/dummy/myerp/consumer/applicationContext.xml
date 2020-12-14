@@ -21,7 +21,6 @@
         </property>
     </bean>
 
-
     <!-- ==================== Consumer-Proxy ==================== -->
 
     <!-- ConsumerHelper -->
@@ -34,7 +33,6 @@
             </list>
         </property>
     </bean>
-
 
     <!-- DaoProxy -->
     <bean id="DaoProxy" class="com.dummy.myerp.consumer.dao.impl.DaoProxyImpl" factory-method="getInstance">
