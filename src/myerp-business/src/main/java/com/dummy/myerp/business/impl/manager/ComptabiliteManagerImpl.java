@@ -117,7 +117,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    // TODO tests à compléter
+
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
 
 
@@ -241,6 +241,29 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         } finally {
             getTransactionManager().rollbackMyERP(vTS);
         }
+    }
+
+    /**
+     * Pour tester getLastValueSequenceEcritureComptableForYear
+     * @param pEcritureComptable
+     * @return
+     * @throws NotFoundException
+     */
+    public int getLastValueSequenceEcritureComptableForYear(EcritureComptable pEcritureComptable) throws NotFoundException {
+        SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
+                .getLastValueSequenceEcritureComptableForYear(
+                        pEcritureComptable.getJournal().getCode(), 2016);
+        return sequenceEcritureComptable.getDerniereValeur();
+    }
+
+    /**
+     * Pour tester getEcritureComptableById
+     * @param id
+     * @return
+     * @throws NotFoundException
+     */
+    public EcritureComptable getEcritureComptableById(Integer id) throws NotFoundException {
+        return getDaoProxy().getComptabiliteDao().getEcritureComptable(id);
     }
 
 
