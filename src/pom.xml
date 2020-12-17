@@ -271,23 +271,12 @@
 <!--                <scope>test</scope>-->
 <!--            </dependency>-->
 
-            <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>1.10.19</version>
                 <scope>test</scope>
             </dependency>
-
-            <!-- ===== Spring Test ===== -->
-
-<!--            <dependency>-->
-<!--                <groupId>org.springframework</groupId>-->
-<!--                <artifactId>spring-test</artifactId>-->
-<!--                <version>${spring.version}</version>-->
-<!--                <scope>test</scope>-->
-<!--            </dependency>-->
-
 
 
         </dependencies>
@@ -310,6 +299,8 @@
         <!-- =============================================================== -->
         <pluginManagement>
             <plugins>
+
+
                 <!-- ===== Java compilation ===== -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -367,11 +358,11 @@
                 </plugin>
 
                 <!-- ===== Test / Reporting ===== -->
-                <plugin>
+             <!--   <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.20</version>
-                </plugin>
+                </plugin>-->
 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
                 <plugin>
@@ -457,7 +448,7 @@
             </plugin>
 
             <!-- ===== Création du rapport des tests unitaires (JUnit) ===== -->
-            <plugin>
+    <!--        <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.20</version>
@@ -465,22 +456,22 @@
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <reportSets>
-                    <!-- reportSet par défaut, exécuté dans tous les modules (non-aggregate reports) -->
+                    &lt;!&ndash; reportSet par défaut, exécuté dans tous les modules (non-aggregate reports) &ndash;&gt;
                     <reportSet>
                         <reports>
-                            <!-- goal "report-only" afin de ne pas relancer les tests unitaires
-                                 car normalement ils ont été lancés par la phase compile -->
+                            &lt;!&ndash; goal "report-only" afin de ne pas relancer les tests unitaires
+                                 car normalement ils ont été lancés par la phase compile &ndash;&gt;
                             <report>report-only</report>
                         </reports>
                     </reportSet>
                     <reportSet>
-                        <!-- reportSet d'agrégation des rapports des sous-modules -->
+                        &lt;!&ndash; reportSet d'agrégation des rapports des sous-modules &ndash;&gt;
                         <id>aggregate</id>
-                        <!-- don't run aggregate in child modules -->
+                        &lt;!&ndash; don't run aggregate in child modules &ndash;&gt;
                         <inherited>false</inherited>
                         <reports>
-                            <!-- goal "report-only" afin de ne pas relancer les tests unitaires
-                                 car normalement ils ont été lancés par la phase compile -->
+                            &lt;!&ndash; goal "report-only" afin de ne pas relancer les tests unitaires
+                                 car normalement ils ont été lancés par la phase compile &ndash;&gt;
                             <report>report-only</report>
                         </reports>
                         <configuration>
@@ -488,8 +479,7 @@
                         </configuration>
                     </reportSet>
                 </reportSets>
-            </plugin>
-
+            </plugin>-->
             <!-- ===== Génération de la Javadoc ===== -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
