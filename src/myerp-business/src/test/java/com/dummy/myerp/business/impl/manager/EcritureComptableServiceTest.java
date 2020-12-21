@@ -1,4 +1,4 @@
-package com.dummy.myerp.business.impl.manager.unitaire;
+package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.service.EcritureComptableService;
 import com.dummy.myerp.technical.exception.NotFoundException;

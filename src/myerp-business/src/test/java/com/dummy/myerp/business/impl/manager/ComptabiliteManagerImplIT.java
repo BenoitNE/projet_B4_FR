@@ -95,6 +95,7 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
         manager.addReference(vEcritureComptable);
         Assert.assertEquals("AC-2020/00001", manager.getEcritureComptableById(1).getReference());
         manager.deleteEcritureComptable(1);
+        manager.deleteSequenceEcritureComptable(2020, "AC");
     }
 
     @Test

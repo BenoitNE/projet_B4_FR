@@ -132,7 +132,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
 
-    public void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
+    protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
 
 
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
@@ -190,7 +190,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    public void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
+    protected void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
@@ -284,6 +284,15 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     public void updateSequenceEcritureComptable(int annee, int derniereValeur, String journalCode){
         getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(annee, derniereValeur, journalCode);
+    }
+
+    /**
+     *
+     * @param annee
+     * @param journalCode
+     */
+    public void deleteSequenceEcritureComptable(int annee, String journalCode){
+        getDaoProxy().getComptabiliteDao().deleteSequenceEcritureComptable(annee,journalCode);
     }
 
 

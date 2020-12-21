@@ -122,6 +122,6 @@ public interface ComptabiliteDao {
      *
      * @param pId l'id de la séquence
      */
-    void deleteSequenceEcritureComptable(Integer pId);
+    void deleteSequenceEcritureComptable(Integer annee, String journalCode);
 
 }

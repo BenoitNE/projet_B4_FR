@@ -1,4 +1,4 @@
-package com.dummy.myerp.business.impl.manager.unitaire;
+package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
