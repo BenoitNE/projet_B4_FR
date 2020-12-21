@@ -1,5 +1,6 @@
 package com.dummy.myerp.business.impl.manager;
 
+
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
@@ -7,12 +8,15 @@ import com.dummy.myerp.testbusiness.business.BusinessTestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
+
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ComptabiliteManagerImplIT extends BusinessTestCase {
+
+public class ComptabiliteManagerImplIT extends BusinessTestCase  {
 
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 
@@ -34,50 +38,64 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase {
         Assert.assertNotNull(ecritureComptableList);
     }
 
-   /* @Test
-    public void addReferenceWhenSequenceEcritureComptableForYearNowExist (){
+    @Test
+    public void addReferenceWhenSequenceEcritureComptableForYearNowExist () throws NotFoundException, ParseException, FunctionalException {
+        try {
+            manager.insertSequenceEcritureComptable(2020, 33, "VE");
+        }catch (Exception e){
+            manager.updateSequenceEcritureComptable(2020, 33,"VE");
+        }
 
-    }*/
-
- /*   @Test
-    public void addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist () throws NotFoundException, ParseException, FunctionalException {
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
+        /* Ecréture comptable avec une séquence d'écriture comptable qui existe pour l'année en cours */
+        EcritureComptable vEcritureComptable2;
+        vEcritureComptable2 = new EcritureComptable();
+        vEcritureComptable2.setId(1);
+        vEcritureComptable2.setReference("VE-2020/00007");
+        vEcritureComptable2.setJournal(new JournalComptable("VE", "addReferenceWhenSequenceEcritureComptableForYearNowExist Test"));
+        vEcritureComptable2.setDate(new Date());
+        vEcritureComptable2.setLibelle("addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist Test");
+        vEcritureComptable2.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
                 null, new BigDecimal(1234),
                 null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
+        vEcritureComptable2.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
                 null, null,
                 new BigDecimal(1234)));
+        manager.insertEcritureComptable(vEcritureComptable2);
 
-        manager.insertEcritureComptable(vEcritureComptable);
+        EcritureComptable vEcritureComptable = manager.getEcritureComptableById(1);
+
+        manager.addReference(vEcritureComptable);
+        Assert.assertEquals("VE-2020/00034", manager.getEcritureComptableById(1).getReference());
+        manager.deleteEcritureComptable(1);
+    }
+
+    @Test
+    public void addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist () throws NotFoundException, ParseException, FunctionalException {
+        /* Ecréture comptable avec une séquence d'écriture comptable qui n'existe pas pour l'année en cours */
+        String sDate = "2019-12-30 00:00:00";
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(sDate);
+
+        EcritureComptable vEcritureComptable1;
+        vEcritureComptable1 = new EcritureComptable();
+        vEcritureComptable1.setId(1);
+        vEcritureComptable1.setReference("AC-2019/00007");
+        vEcritureComptable1.setJournal(new JournalComptable("AC", "addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist Test"));
+        vEcritureComptable1.setDate(date);
+        vEcritureComptable1.setLibelle("addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist Test");
+        vEcritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
+                null, new BigDecimal(1234),
+                null));
+        vEcritureComptable1.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
+                null, null,
+                new BigDecimal(1234)));
+        manager.insertEcritureComptable(vEcritureComptable1);
+
+        EcritureComptable vEcritureComptable = manager.getEcritureComptableById(1);
+
         manager.addReference(vEcritureComptable);
         Assert.assertEquals("AC-2020/00001", manager.getEcritureComptableById(1).getReference());
-
-    }*/
-
-  /*  @Test
-    public void insertEcritureComptable () throws ParseException, FunctionalException, NotFoundException {
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("VE", "Vente"));
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Test");
-        vEcritureComptable.setReference("VE-2020/00001");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
-                null, new BigDecimal(1234),
-                null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
-                null, null,
-                new BigDecimal(1234)));
-
-        manager.insertEcritureComptable(vEcritureComptable);
-        vEcritureComptable = manager.getEcritureComptableById(1);
-        Assert.assertEquals("VE-2020/00001", vEcritureComptable.getReference());
-    }*/
+        manager.deleteEcritureComptable(1);
+    }
 
     @Test
     public void updateEcritureComptable () throws NotFoundException, FunctionalException {
@@ -88,31 +106,29 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase {
     }
 
     @Test
-    public void deleteEcritureComptable() throws NotFoundException {
-        manager.deleteEcritureComptable(-4);
-        List<EcritureComptable> ecritureComptableList = manager.getListEcritureComptable();
-        for (EcritureComptable ecritureComptable:ecritureComptableList){
-            Assert.assertNotEquals(java.util.Optional.of(-4), ecritureComptable.getId());
-        }
-    }
-
-    @Test
-    public void getLastValueSequenceEcritureComptableForYear () throws NotFoundException {
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, new BigDecimal(123),
+    public void deleteEcritureComptable() throws NotFoundException, ParseException, FunctionalException {
+        /* Ecriture comptable pour tester la suppresssion */
+        EcritureComptable vEcritureComptable3;
+        vEcritureComptable3 = new EcritureComptable();
+        vEcritureComptable3.setId(1);
+        vEcritureComptable3.setReference("OD-2020/00023");
+        vEcritureComptable3.setJournal(new JournalComptable("OD", "addReferenceWhenSequenceEcritureComptableForYearNowExist Test"));
+        vEcritureComptable3.setDate(new Date());
+        vEcritureComptable3.setLibelle("Ecriture comptable à supprimer Test");
+        vEcritureComptable3.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(401),
+                null, new BigDecimal(1234),
                 null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+        vEcritureComptable3.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
                 null, null,
                 new BigDecimal(1234)));
+        manager.insertEcritureComptable(vEcritureComptable3);
 
-        Assert.assertEquals(40, manager.getLastValueSequenceEcritureComptableForYear(vEcritureComptable));
+        manager.deleteEcritureComptable(1);
+        List<EcritureComptable> ecritureComptableList = manager.getListEcritureComptable();
+        for (EcritureComptable ecritureComptable : ecritureComptableList) {
+            Assert.assertNotEquals(java.util.Optional.of(1), ecritureComptable.getId());
+        }
     }
-
     @Test
     public void getEcritureComptableById () throws NotFoundException {
         EcritureComptable vEcritureComptable = manager.getEcritureComptableById(-2);

@@ -117,5 +117,11 @@ public interface ComptabiliteDao {
      */
     void updateSequenceEcritureComptable(int pAnnee, int pDerniereValeur, String pJournalCode);
 
+    /**
+     * Supprime laséquence d'écriture comptable d'id {@code pId}.
+     *
+     * @param pId l'id de la séquence
+     */
+    void deleteSequenceEcritureComptable(Integer pId);
 
 }

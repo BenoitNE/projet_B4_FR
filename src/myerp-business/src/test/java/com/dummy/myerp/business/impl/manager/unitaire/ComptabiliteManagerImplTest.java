@@ -1,4 +1,4 @@
-package com.dummy.myerp.business.impl.manager;
+package com.dummy.myerp.business.impl.manager.unitaire;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.business.impl.TransactionManager;
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;

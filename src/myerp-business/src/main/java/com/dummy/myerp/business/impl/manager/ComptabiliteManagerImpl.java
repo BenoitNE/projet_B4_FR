@@ -132,7 +132,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
 
-    protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
+    public void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
 
 
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
@@ -190,7 +190,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    protected void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
+    public void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
@@ -258,20 +258,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     }
 
     /**
-     * Pour tester getLastValueSequenceEcritureComptableForYear
-     * @param pEcritureComptable
-     * @return
-     * @throws NotFoundException
-     */
-    public int getLastValueSequenceEcritureComptableForYear(EcritureComptable pEcritureComptable) throws NotFoundException {
-        SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
-                .getLastValueSequenceEcritureComptableForYear(
-                        pEcritureComptable.getJournal().getCode(), 2016);
-        return sequenceEcritureComptable.getDerniereValeur();
-    }
-
-    /**
-     * Pour tester getEcritureComptableById
      * @param id
      * @return
      * @throws NotFoundException
@@ -279,5 +265,26 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public EcritureComptable getEcritureComptableById(Integer id) throws NotFoundException {
         return getDaoProxy().getComptabiliteDao().getEcritureComptable(id);
     }
+
+    /**
+     *
+     * @param annee
+     * @param derniereValeur
+     * @param journalCode
+     */
+    public void insertSequenceEcritureComptable(int annee, int derniereValeur, String journalCode){
+        getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(annee, derniereValeur, journalCode);
+    }
+
+    /**
+     *
+     * @param annee
+     * @param derniereValeur
+     * @param journalCode
+     */
+    public void updateSequenceEcritureComptable(int annee, int derniereValeur, String journalCode){
+        getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(annee, derniereValeur, journalCode);
+    }
+
 
 }
