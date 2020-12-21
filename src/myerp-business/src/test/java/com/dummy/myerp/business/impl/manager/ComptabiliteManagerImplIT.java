@@ -119,6 +119,4 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase {
         Assert.assertEquals("TMA Appli Xxx",vEcritureComptable.getLibelle());
     }
 
-
-
 }
