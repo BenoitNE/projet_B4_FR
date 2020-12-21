@@ -64,45 +64,53 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
 
-        String referenceEcritureComptable = null;
+        //try {
+            try {
+                addReferenceWhenSequenceEcritureComptableForYearNowExist(pEcritureComptable);
 
+            } catch (Exception e) {
+
+                addReferenceWhenSequenceEcritureComptableForYearNowDoesNotExist(pEcritureComptable);
+            }
+
+        /*} catch (Exception e){
+            throw new NotFoundException("La référence n'a pas pu être générée");
+        }*/
+    }
+
+    private void addReferenceWhenSequenceEcritureComptableForYearNowDoesNotExist(EcritureComptable pEcritureComptable) {
+        // 2. S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+        //    2.1. Utiliser le numéro 1
+        SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable();
+        String referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/00001";
+
+        // 4.  Enregistrer (insert) la valeur de la séquence en persitance
+        getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(ecritureComptableService.getYearNow(),
+                1, pEcritureComptable.getJournal().getCode());
+
+        // 3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
+        pEcritureComptable.setReference(referenceEcritureComptable);
+        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
+    }
+
+    private void addReferenceWhenSequenceEcritureComptableForYearNowExist(EcritureComptable pEcritureComptable) throws NotFoundException {
         // 1. Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
-        //                        (table sequence_ecriture_comptable)
-        try {
-                SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
-                        .getLastValueSequenceEcritureComptableForYear(
-                        pEcritureComptable.getJournal().getCode(), ecritureComptableService.getYearNow());
+        //    (table sequence_ecriture_comptable)
+        SequenceEcritureComptable sequenceEcritureComptable = getDaoProxy().getComptabiliteDao()
+                .getLastValueSequenceEcritureComptableForYear(
+                pEcritureComptable.getJournal().getCode(), ecritureComptableService.getYearNow());
 
-                // 2. S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                //    2.1. Utiliser le numéro 1
-                // 4.  Enregistrer (insert) la valeur de la séquence en persitance
-              /*  if (sequenceEcritureComptable == null){
-                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/00001";
-                getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(ecritureComptableService.getYearNow(),1,pEcritureComptable.getJournal().getCode());
-                }*/
+        //    2.2. Utiliser la dernière valeur + 1
+        // 4.  Enregistrer (update) la valeur de la séquence en persitance
+        getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable.getAnnee(),
+            sequenceEcritureComptable.getDerniereValeur()+1, pEcritureComptable.getJournal().getCode());
 
-                //    2.2. Utiliser la dernière valeur + 1
-                // 4.  Enregistrer (update) la valeur de la séquence en persitance
-                //else{
-                getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sequenceEcritureComptable.getAnnee(),
-                    sequenceEcritureComptable.getDerniereValeur()+1, pEcritureComptable.getJournal().getCode());
-                referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/" +
-                        ecritureComptableService.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
-               // }
+        String referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/" +
+            ecritureComptableService.getNewSequenceNumber(sequenceEcritureComptable.getDerniereValeur());
 
-        } catch (Exception e) {
-            //throw new NotFoundException("La référence n'a pas pu être générée");
-            //SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable();
-            referenceEcritureComptable = pEcritureComptable.getJournal().getCode() + "-" + ecritureComptableService.getYearNow() + "/00001";
-            //getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(ecritureComptableService.getYearNow(),1,pEcritureComptable.getJournal().getCode());
-
-        }
-
-                // 3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-            pEcritureComptable.setReference(referenceEcritureComptable);
-            getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
-
-
+        // 3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
+        pEcritureComptable.setReference(referenceEcritureComptable);
+        getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
     }
 
 
