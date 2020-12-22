@@ -1,6 +1,7 @@
-package com.dummy.myerp.business.impl.manager;
+package com.dummy.myerp.testbusiness.business;
 
 
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
