@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    tools { 
+        maven 'Maven' 
+        jdk 'jdk8' 
+    }
+    stages {
+        stage('Clone'){
+             steps {
+            git branch: 'main',
+            credentialsId: '646031fd-5fae-4633-9a96-a4e9a13ac991',
+            url: 'https://github.com/BenoitNE/Myerp_MASTER.git'
+             }
+        }
+        stage('PWD') {
+            steps {
+                sh 'pwd'
+            }
+        }
+        stage('Build') {
+            steps {
+                dir("src") {
+                 sh 'mvn clean package'
+                }
+                
+            }
+        }
+    }
+}

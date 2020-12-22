@@ -62,20 +62,19 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * {@inheritDoc}
      */
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws FunctionalException {
 
-        //try {
             try {
                 addReferenceWhenSequenceEcritureComptableForYearNowExist(pEcritureComptable);
 
-            } catch (Exception e) {
-
+            } catch (Exception e1) {
+                try {
                 addReferenceWhenSequenceEcritureComptableForYearNowDoesNotExist(pEcritureComptable);
+                } catch (Exception e2){
+                    throw new FunctionalException("La référence n'a pas pu être générée");
             }
 
-        /*} catch (Exception e){
-            throw new NotFoundException("La référence n'a pas pu être générée");
-        }*/
+        }
     }
 
     private void addReferenceWhenSequenceEcritureComptableForYearNowDoesNotExist(EcritureComptable pEcritureComptable) {

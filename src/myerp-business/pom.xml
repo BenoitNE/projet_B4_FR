@@ -95,6 +95,12 @@
             <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--<dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>-->
 
     </dependencies>
 
@@ -180,11 +186,11 @@
                     </configuration>
                 </execution>
             </executions>
-            <configuration>
+            <!--<configuration>
                 <systemPropertyVariables>
                     <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
                 </systemPropertyVariables>
-            </configuration>
+            </configuration>-->
         </plugin>
         </plugins>
 
