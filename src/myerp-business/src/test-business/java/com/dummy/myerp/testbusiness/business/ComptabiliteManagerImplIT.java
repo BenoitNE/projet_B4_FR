@@ -27,11 +27,11 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
         Assert.assertNotNull(compteComptableList);
     }
 
-    @Test
+   /* @Test
     public void getListJournalComptable() {
         List <JournalComptable> journalComptableList = manager.getListJournalComptable();
         Assert.assertNotNull(journalComptableList);
-    }
+    }*/
 
     @Test
     public void getListEcritureComptable(){

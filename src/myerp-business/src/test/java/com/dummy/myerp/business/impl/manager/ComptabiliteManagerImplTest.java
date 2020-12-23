@@ -74,7 +74,7 @@ public class ComptabiliteManagerImplTest {
             when (this.comptabiliteDaoMock.getEcritureComptableByRef(vEcritureComptable1.getReference()))
                    .thenReturn(vEcritureComptable2);
 
-        manager.checkEcritureComptable(vEcritureComptable1);
+        manager.checkEcritureComptable(vEcritureComptable1);//TODO retour boolean
 
     }
 
@@ -201,7 +201,7 @@ public class ComptabiliteManagerImplTest {
 
     }
     /*-------------------------- addReference Test --------------------------------*/
-
+//TODO tester Exception
     @Test
     public void addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist () throws NotFoundException, FunctionalException {
         EcritureComptable vEcritureComptable;
