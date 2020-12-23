@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.util.Date;
 
-
+//modificationq
 
 public class EcritureComptableServiceTest {
 
