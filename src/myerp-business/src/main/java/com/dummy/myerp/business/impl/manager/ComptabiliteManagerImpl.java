@@ -115,11 +115,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
+     * @return
      */
     @Override
-    public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
+    public boolean checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
         this.checkEcritureComptableUnit(pEcritureComptable);
         this.checkEcritureComptableContext(pEcritureComptable);
+        return true;
     }
 
 
@@ -131,7 +133,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
 
-    protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
+    protected boolean checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException, ParseException {
 
 
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
@@ -179,6 +181,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         if(ecritureComptableService.getYearFromDate(pEcritureComptable.getDate())!=(ecritureComptableService.getDateByReference(pEcritureComptable.getReference()))){
             throw new FunctionalException("L'année dans la référence ne correspond pas à celle de l'écriture.");
         }
+        return true;
     }
 
 
@@ -189,7 +192,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    public void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
+    public boolean checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {
@@ -208,6 +211,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 // Dans ce cas, c'est bon, ça veut dire qu'on n'a aucune autre écriture avec la même référence.
             }
         }
+        return true;
     }
 
     /**

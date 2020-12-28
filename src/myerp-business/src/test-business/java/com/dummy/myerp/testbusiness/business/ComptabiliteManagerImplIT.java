@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public class ComptabiliteManagerImplIT extends BusinessTestCase  {
@@ -23,15 +24,13 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
 
     @Test
     public void getListCompteComptable() {
+      //  CompteComptable compteComptable = null;
         List<CompteComptable> compteComptableList = manager.getListCompteComptable();
-        Assert.assertNotNull(compteComptableList);
-    }
+      //  Assert.assertNotNull(compteComptableList);
+        CompteComptable compteComptable = compteComptableList.get(0);
+        Assert.assertEquals("Fournisseurs",compteComptable.getLibelle() );
 
-   /* @Test
-    public void getListJournalComptable() {
-        List <JournalComptable> journalComptableList = manager.getListJournalComptable();
-        Assert.assertNotNull(journalComptableList);
-    }*/
+    }
 
     @Test
     public void getListEcritureComptable(){
