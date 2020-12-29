@@ -191,6 +191,27 @@
                     <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
                 </systemPropertyVariables>
             </configuration>-->
+            <configuration>
+                <dataFile>target/jacoco.exec</dataFile>
+                <!-- Sets the output directory for the code coverage report. -->
+                <outputDirectory>target/jacoco-ut</outputDirectory>
+                <rules>
+                    <rule implementation="org.jacoco.maven.RuleConfiguration">
+                        <element>PACKAGE</element>
+                        <limits>
+                            <limit implementation="org.jacoco.report.check.Limit">
+                                <counter>COMPLEXITY</counter>
+                                <value>COVEREDRATIO</value>
+                                <minimum>0.00</minimum>
+                            </limit>
+                        </limits>
+                    </rule>
+                </rules>
+                <excludes>
+                    <!--com.dummy.myerp.business.impl-->
+                    <exclude>com/dummy/myerp/business/impl/connection/**</exclude>
+                </excludes>
+            </configuration>
         </plugin>
         </plugins>
 

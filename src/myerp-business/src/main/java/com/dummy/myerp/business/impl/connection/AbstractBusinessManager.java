@@ -1,4 +1,4 @@
-package com.dummy.myerp.business.impl;
+package com.dummy.myerp.business.impl.connection;
 
 import javax.validation.Configuration;
 import javax.validation.Validation;

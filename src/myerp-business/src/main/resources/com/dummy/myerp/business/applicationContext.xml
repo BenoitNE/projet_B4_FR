@@ -8,7 +8,7 @@
 
     <!-- BusinessProxy -->
     <bean id="BusinessProxy"
-          class="com.dummy.myerp.business.impl.BusinessProxyImpl"
+          class="com.dummy.myerp.business.impl.connection.BusinessProxyImpl"
           scope="singleton"
           factory-method="getInstance">
         <constructor-arg ref="DaoProxy"/>

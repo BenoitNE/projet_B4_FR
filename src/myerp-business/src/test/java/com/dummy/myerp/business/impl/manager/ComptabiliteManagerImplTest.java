@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
 
-import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.business.impl.TransactionManager;
-import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
+import com.dummy.myerp.business.impl.connection.AbstractBusinessManager;
+import com.dummy.myerp.business.impl.connection.TransactionManager;
 import com.dummy.myerp.business.service.EcritureComptableService;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
@@ -166,7 +165,6 @@ public class ComptabiliteManagerImplTest {
 
     }
     /*-------------------------- addReference Test --------------------------------*/
-//TODO tester Exception
     @Test
     public void addReferenceWhenSequenceEcritureComptableForYearNowDoesntExist () throws NotFoundException, FunctionalException {
         EcritureComptable vEcritureComptable = ecritureComptable1();

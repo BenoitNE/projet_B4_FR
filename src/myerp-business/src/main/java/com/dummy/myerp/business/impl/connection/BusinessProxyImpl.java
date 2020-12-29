@@ -1,4 +1,4 @@
-package com.dummy.myerp.business.impl;
+package com.dummy.myerp.business.impl.connection;
 
 import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;

@@ -1,7 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
-import com.dummy.myerp.business.impl.AbstractBusinessManager;
+import com.dummy.myerp.business.impl.connection.AbstractBusinessManager;
 import com.dummy.myerp.business.service.EcritureComptableService;
 import com.dummy.myerp.model.bean.comptabilite.*;
 
