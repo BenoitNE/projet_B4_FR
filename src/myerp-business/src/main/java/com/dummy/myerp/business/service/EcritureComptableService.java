@@ -57,5 +57,6 @@ public class EcritureComptableService {
     public int getYearFromDate(Date date){
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate.getYear();
+        //pour test
     }
 }
