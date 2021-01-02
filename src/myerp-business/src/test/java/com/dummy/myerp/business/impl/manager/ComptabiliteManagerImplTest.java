@@ -56,7 +56,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.setReference("AC-2020/00122");
+        vEcritureComptable.setReference("AC-2021/00122");
         vEcritureComptable.getListLigneEcriture()
                 .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
         vEcritureComptable.getListLigneEcriture()
@@ -71,7 +71,7 @@ public class ComptabiliteManagerImplTest {
             vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
             vEcritureComptable.setDate(new Date());
             vEcritureComptable.setLibelle("Libelle");
-            vEcritureComptable.setReference("AC-2020/00033");
+            vEcritureComptable.setReference("AC-2021/00033");
             vEcritureComptable.getListLigneEcriture()
                     .add(new LigneEcritureComptable(new CompteComptable(3), null, new BigDecimal(123), null));
             vEcritureComptable.getListLigneEcriture()
@@ -86,7 +86,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.setReference("AC-2020/00122");
+        vEcritureComptable.setReference("AC-2021/00122");
         vEcritureComptable.getListLigneEcriture()
                 .add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
         return vEcritureComptable;
@@ -113,7 +113,7 @@ public class ComptabiliteManagerImplTest {
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableUnitViolation() throws Exception {
         EcritureComptable vEcritureComptable = ecritureComptable1();
-        vEcritureComptable.setReference("AC-2020/33");// Violation de regexp = "\\w{1,5}-\\d{4}/\\d{5}"
+        vEcritureComptable.setReference("AC-2021/33");// Violation de regexp = "\\w{1,5}-\\d{4}/\\d{5}"
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
@@ -158,7 +158,7 @@ public class ComptabiliteManagerImplTest {
     public void checkEcritureComptableContextRG6() throws NotFoundException, FunctionalException, ParseException {
         EcritureComptable vEcritureComptable1 = ecritureComptable1();
         EcritureComptable vEcritureComptable2 = ecritureComptable2();
-        vEcritureComptable2.setReference("AC-2020/00122"); // Référence identique à ecritureComptable1
+        vEcritureComptable2.setReference("AC-2021/00122"); // Référence identique à ecritureComptable1
         when(this.comptabiliteDaoMock.getEcritureComptableByRef(vEcritureComptable1.getReference()))
                 .thenReturn(vEcritureComptable2);
         manager.checkEcritureComptableContext(vEcritureComptable1);
@@ -176,7 +176,7 @@ public class ComptabiliteManagerImplTest {
             e.printStackTrace();
         }
         manager.addReference(vEcritureComptable);
-        Assert.assertEquals("AC-2020/00001",vEcritureComptable.getReference());
+        Assert.assertEquals("AC-2021/00001",vEcritureComptable.getReference());
     }
 
     @Test
@@ -184,7 +184,7 @@ public class ComptabiliteManagerImplTest {
         EcritureComptable vEcritureComptable = ecritureComptable1();
         SequenceEcritureComptable vSequenceEcritureComptable = new SequenceEcritureComptable();
         vSequenceEcritureComptable.setJournalCode("AC");
-        vSequenceEcritureComptable.setAnnee(2020);
+        vSequenceEcritureComptable.setAnnee(2021);
         vSequenceEcritureComptable.setDerniereValeur(89);
         try {
             when (this.comptabiliteDaoMock.getLastValueSequenceEcritureComptableForYear(vEcritureComptable.getJournal().getCode(),
@@ -193,7 +193,7 @@ public class ComptabiliteManagerImplTest {
             e.printStackTrace();
         }
         manager.addReference(vEcritureComptable);
-        Assert.assertEquals("AC-2020/00090",vEcritureComptable.getReference());
+        Assert.assertEquals("AC-2021/00090",vEcritureComptable.getReference());
     }
 
     @Test(expected = FunctionalException.class)

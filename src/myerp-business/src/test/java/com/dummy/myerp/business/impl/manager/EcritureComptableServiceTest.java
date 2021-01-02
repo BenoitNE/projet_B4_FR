@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.util.Date;
 
-//modificationq
 
 public class EcritureComptableServiceTest {
 
@@ -34,12 +33,12 @@ public class EcritureComptableServiceTest {
 
     @Test
     public void  getIntDateByReference() throws ParseException {
-        Assert.assertEquals(2020 , referenceService.getDateByReference("AC-2020/00031"));
+        Assert.assertEquals(2021 , referenceService.getDateByReference("AC-2021/00031"));
     }
 
     @Test
     public void getYearFromDate(){
-        Assert.assertEquals(2020,referenceService.getYearFromDate(new Date()));
+        Assert.assertEquals(2021,referenceService.getYearFromDate(new Date()));
     }
 
 }

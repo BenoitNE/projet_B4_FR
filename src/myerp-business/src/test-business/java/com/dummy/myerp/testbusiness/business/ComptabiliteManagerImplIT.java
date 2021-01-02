@@ -26,7 +26,7 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setId(1);
-        vEcritureComptable.setReference("VE-2020/00007");
+        vEcritureComptable.setReference("VE-2021/00007");
         vEcritureComptable.setJournal(new JournalComptable("VE", "journal test"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("libelle test");
@@ -58,10 +58,10 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
 
     @Test
     public void addReferenceWhenSequenceEcritureComptableForYearNowExist () throws NotFoundException, ParseException, FunctionalException {
-        manager.insertSequenceEcritureComptable(2020, 33, "VE");
+        manager.insertSequenceEcritureComptable(2021, 33, "VE");
         EcritureComptable vEcritureComptable = manager.getEcritureComptableById(1);
         manager.addReference(vEcritureComptable);
-        Assert.assertEquals("VE-2020/00034", manager.getEcritureComptableById(1).getReference());
+        Assert.assertEquals("VE-2021/00034", manager.getEcritureComptableById(1).getReference());
     }
 
 
@@ -70,7 +70,7 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
         EcritureComptable vEcritureComptable = manager.getEcritureComptableById(1);
         vEcritureComptable.setReference("VE-2019/00089");
         manager.addReference(vEcritureComptable);
-        Assert.assertEquals("VE-2020/00001", vEcritureComptable.getReference());
+        Assert.assertEquals("VE-2021/00001", vEcritureComptable.getReference());
     }
 
     @Test
@@ -111,6 +111,6 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase  {
     @After
     public void deleteEcritureComptableId1() {
         manager.deleteEcritureComptable(1);
-        manager.deleteSequenceEcritureComptable(2020,"VE");
+        manager.deleteSequenceEcritureComptable(2021,"VE");
     }
 }
