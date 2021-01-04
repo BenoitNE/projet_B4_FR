@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.util.Date;
 
-//NOTE: test Jenkins
+
 public class EcritureComptableServiceTest {
 
     private EcritureComptableService referenceService = new EcritureComptableService();
