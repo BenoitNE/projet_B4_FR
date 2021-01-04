@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
  * Bean représentant une Écriture Comptable
  */
 public class EcritureComptable {
+    // toto
 
     // ==================== Attributs ====================
     /** The Id. */
